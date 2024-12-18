@@ -59,7 +59,7 @@ def appendRowToSpecificTable(bodyContent, targetTableId, version, customer, andr
     //     error "No table with ac:local-id '${targetTableId}' was found."
     // }
     def doc = org.jsoup.Jsoup.parse(body)
-    def table = doc.select("table[ac\\:local-id=itravel-pos-and-dining]").first()
+    def table = doc.select("table").first()
     if (!table) {
         println "Table not found"
         return null
