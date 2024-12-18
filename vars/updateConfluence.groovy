@@ -11,7 +11,7 @@ def call(pageId, project, releaseVersion, type, android, ios){
         def pageTitle = pageData.results[0].title
         def pageBody = pageData.results[0].body.storage.value
 
-        // def updatedBody = appendRowToSpecificTable(pageBody, project, releaseVersion, type, android, ios)
+        def updatedBody = appendRowToSpecificTable(pageBody, project, releaseVersion, type, android, ios)
         updateConfluencePage(pageId, pageTitle, pageBody, currentVersion)
         println "Confluence Success"
     } else {
@@ -48,11 +48,12 @@ def appendRowToSpecificTable(bodyContent, targetTableId, version, customer, andr
     def newRow = buildNewTableRow(version, customer, androidLink, iosLink)
 
     // Locate the target table using ac:local-id
-    def updatedBody = bodyContent.replaceFirst(/(<table[^>]*ac:local-id="${targetTableId}"[^>]*>.*?)(<\/tbody>|<\/table>)/) { match, tableStart, tableEnd ->
-        // Append the new row before </tbody> or </table>
-        "${tableStart}${newRow}${tableEnd}"
+    def updatedBody = bodyContent.replaceFirst(/(<table[^>]*ac:local-id="${targetTableId}"[^>]*>.*?<tbody>)(.*?)(<\/tbody>)/) { match, beforeBody, rows, afterBody ->
+        "${beforeBody}${rows}${newRow}${afterBody}"
     }
 
+
+ 
     if (updatedBody == bodyContent) {
         error "No table with ac:local-id '${targetTableId}' was found."
     }
