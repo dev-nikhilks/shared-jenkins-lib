@@ -12,8 +12,8 @@ def call(pageId, project, releaseVersion, type, android, ios){
         def pageBody = pageData.results[0].body.storage.value
 
         def updatedBody = appendRowToSpecificTable(pageBody, project, releaseVersion, type, android, ios)
-        updateConfluencePage(pageId, pageTitle, pageBody, currentVersion)
-        println "Confluence Success"
+        // updateConfluencePage(pageId, pageTitle, pageBody, currentVersion)
+        println "Confluence Success $updatedBody"
     } else {
         println "Confluence Page Not found"
     }
