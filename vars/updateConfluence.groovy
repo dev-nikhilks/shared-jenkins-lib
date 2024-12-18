@@ -45,7 +45,7 @@ def fetchPageContent(pageId) {
 
 // Function to append a row to a specific table identified by ac:local-id
 def appendRowToSpecificTable(bodyContent, targetTableId, version, customer, androidLink, iosLink) {
-    def newRow = buildNewTableRow(version, customer, androidLink, iosLink)
+    // def newRow = buildNewTableRow(version, customer, androidLink, iosLink)
 
     // // Locate the target table using ac:local-id
     // def updatedBody = bodyContent.replaceFirst(/(<table[^>]*ac:local-id="${targetTableId}"[^>]*>.*?<tbody>)(.*?)(<\/tbody>)/) { match, beforeBody, rows, afterBody ->
