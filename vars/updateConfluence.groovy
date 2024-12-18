@@ -13,7 +13,7 @@ def call(pageId, project, releaseVersion, type, android, ios){
 
         def updatedBody = appendRowToSpecificTable(pageBody, project, releaseVersion, type, android, ios)
         // updateConfluencePage(pageId, pageTitle, pageBody, currentVersion)
-        println "Confluence Success $updatedBody"
+        println "Confluence Success"
     } else {
         println "Confluence Page Not found"
     }
@@ -47,17 +47,24 @@ def fetchPageContent(pageId) {
 def appendRowToSpecificTable(bodyContent, targetTableId, version, customer, androidLink, iosLink) {
     def newRow = buildNewTableRow(version, customer, androidLink, iosLink)
 
-    // Locate the target table using ac:local-id
-    def updatedBody = bodyContent.replaceFirst(/(<table[^>]*ac:local-id="${targetTableId}"[^>]*>.*?<tbody>)(.*?)(<\/tbody>)/) { match, beforeBody, rows, afterBody ->
-        "${beforeBody}${rows}${newRow}${afterBody}"
-    }
+    // // Locate the target table using ac:local-id
+    // def updatedBody = bodyContent.replaceFirst(/(<table[^>]*ac:local-id="${targetTableId}"[^>]*>.*?<tbody>)(.*?)(<\/tbody>)/) { match, beforeBody, rows, afterBody ->
+    //     "${beforeBody}${rows}${newRow}${afterBody}"
+    // }
 
 
  
-    if (updatedBody == bodyContent) {
-        error "No table with ac:local-id '${targetTableId}' was found."
+    // if (updatedBody == bodyContent) {
+    //     error "No table with ac:local-id '${targetTableId}' was found."
+    // }
+    def doc = org.jsoup.Jsoup.parse(bodyContent)
+    def table = doc.select("table[ac\\:local-id=${tableId}]").first()
+    if (!table) {
+        return null
     }
-    return updatedBody
+    def newRow = table.append("${newRow}")
+    println "Confluence page data is ${doc.html()}"
+    return null
 }
 
 // Function to build a new table row
