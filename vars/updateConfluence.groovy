@@ -62,7 +62,7 @@ def appendRowToSpecificTable(bodyContent, targetTableId, version, customer, andr
     if (!table) {
         return null
     }
-    def newRow = table.append("${newRow}")
+    table.append("${newRow}")
     println "Confluence page data is ${doc.html()}"
     return null
 }
