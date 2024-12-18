@@ -64,8 +64,13 @@ def appendRowToSpecificTable(bodyContent, targetTableId, version, customer, andr
         println "Table not found"
         return null
     }
+    def tbody = table.select("tbody").first()
+    if (!tbody) {
+        println "Table body not found"
+        return null
+    }
         // Create the new table row
-    def newRow = table.append("<tr></tr>").select("tr").last()
+    def newRow = tbody.append("<tr></tr>").select("tr").last()
 
     // Add the cells to the new row
     newRowData.each { cellData ->
