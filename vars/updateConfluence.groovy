@@ -20,13 +20,13 @@ def call(Map<String, String> inputs){
 
     def newRow = buildNewTableRow(config)
     def doc = org.jsoup.Jsoup.parse(content)
-    // def table = doc.select("table[ac:local-id=${inputs.appId}]").first()
-    // if (!table) {
-    //     println "Table not found"
-    //     return null
-    // }
-    // def tbody = table.select("tbody").first()
-    // tbody.append(newRow)
+    def table = doc.select("table[ac:local-id=${inputs.appId}]").first()
+    if (!table) {
+        println "Table not found"
+        return null
+    }
+    def tbody = table.select("tbody").first()
+    tbody.append(newRow)
     doc.outputSettings().syntax(org.jsoup.nodes.Document.OutputSettings.Syntax.xml).escapeMode(org.jsoup.nodes.Entities.EscapeMode.xhtml)
     println "Output is ${doc.body().html()}"
     updateConfluencePageContent(config, doc.body().html())
