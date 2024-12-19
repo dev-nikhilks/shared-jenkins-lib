@@ -42,11 +42,14 @@ def getConfluencePageContent(pageId) {
 }
 
 def updateConfluencePageContent(Map<String, String> inputs, newContent) {
+    println "ConfluencePageContent $newContent"
     def jsonBuilder = new JsonBuilder([version: [number: inputs.pageVersion + 1], title: inputs.title, id: inputs.pageId, status: "current", body: [representation: "storage", value: newContent]])
     def cmd = ["curl", "-X", "PUT", "-s", "-u", "${CONF_USERNAME}:${CONF_PASSWORD}", "-H", "Content-Type: application/json", "-d", jsonBuilder.toPrettyString(), "${env.CONFLUENCE_BASE_URL}/pages/${inputs.pageId}"]
     def process = cmd.execute()
     process.waitFor()
+    println "ConfluencePageContent not here"
     if (process.exitValue() != 0) {
+        println "ConfluencePageContent Error"
         throw new RuntimeException("Failed to update Confluence page: ${process.err.text}")
     }
     println process.text
