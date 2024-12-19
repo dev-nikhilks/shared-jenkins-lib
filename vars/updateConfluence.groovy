@@ -41,46 +41,50 @@ def getConfluencePageContent(pageId) {
     process.waitFor()
     // println "This is it ${process.text}"
     if (process.exitValue() != 0) {
+        println "Confluence page($pageId) not fetched, error in response"
         return null
     }
     def response = new JsonSlurper().parseText(process.text)
     if(response.results.isEmpty()){
+        println "Confluence page($pageId) not fetched "
         return null;
     }
     return response;
 }
 
 def updateConfluencePageContent(Map<String, String> inputs, newContent) {
-    println "ConfluencePageContent $newContent"
     def jsonBuilder = new JsonBuilder([version: [number: inputs.pageVersion + 1], title: inputs.title, id: inputs.pageId, status: "current", body: [representation: "storage", value: newContent]])
     def cmd = ["curl", "-X", "PUT", "-s", "-u", "${CONF_USERNAME}:${CONF_PASSWORD}", "-H", "Content-Type: application/json", "-d", jsonBuilder.toPrettyString(), "${env.CONFLUENCE_BASE_URL}/pages/${inputs.pageId}"]
     def process = cmd.execute()
     process.waitFor()
-    println "ConfluencePageContent not here"
     if (process.exitValue() != 0) {
         println "ConfluencePageContent Error"
-        throw new RuntimeException("Failed to update Confluence page: ${process.err.text}")
+        return null;
     }
-    println process.text
+    if(response.results.isEmpty()){
+        println "Confluence page($pageId) update not competed"
+        return null;
+    }
+    println "Confluence page($pageId) updated successfully"
 }
 
 def buildNewTableRow(Map<String, String> inputs) {
     def currentDate = new Date().format("dd/MM/yyyy")
     return """
         <tr>
-            <td>
+            <td style="text-align: center; vertical-align: middle;>
                 <p style="text-align: center;">${currentDate}</p>
             </td>
-            <td>
+            <td style="text-align: center; vertical-align: middle;>
                 <p style="text-align: center;">${inputs.customer}</p>
             </td>
-            <td>
+            <td style="text-align: center; vertical-align: middle; >
                 <p style="text-align: center;">${inputs.appVersion}</p>
             </td>
-            <td>
+            <td style="text-align: center; vertical-align: middle;>
                 <p style="text-align: center;"><a href="${inputs.androidLink}">Download</a></p>
             </td>
-            <td>
+            <td style="text-align: center; vertical-align: middle;>
                 <p style="text-align: center;"><a href="${inputs.iosLink}">Download</a></p>
             </td>
         </tr>
