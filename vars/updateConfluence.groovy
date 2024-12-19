@@ -72,19 +72,19 @@ def buildNewTableRow(Map<String, String> inputs) {
     def currentDate = new Date().format("dd/MM/yyyy")
     return """
         <tr>
-            <td style="text-align: center; vertical-align: middle;>
+            <td style="text-align: center; vertical-align: middle;">
                 <p style="text-align: center;">${currentDate}</p>
             </td>
-            <td style="text-align: center; vertical-align: middle;>
+            <td style="text-align: center; vertical-align: middle;">
                 <p style="text-align: center;">${inputs.customer}</p>
             </td>
-            <td style="text-align: center; vertical-align: middle; >
+            <td style="text-align: center; vertical-align: middle;">
                 <p style="text-align: center;">${inputs.appVersion}</p>
             </td>
-            <td style="text-align: center; vertical-align: middle;>
+            <td style="text-align: center; vertical-align: middle;">
                 <p style="text-align: center;"><a href="${inputs.androidLink}">Download</a></p>
             </td>
-            <td style="text-align: center; vertical-align: middle;>
+            <td style="text-align: center; vertical-align: middle;">
                 <p style="text-align: center;"><a href="${inputs.iosLink}">Download</a></p>
             </td>
         </tr>
