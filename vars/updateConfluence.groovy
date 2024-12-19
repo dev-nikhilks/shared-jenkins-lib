@@ -74,19 +74,19 @@ def buildNewTableRow(Map<String, String> inputs) {
     return """
         <tr>
             <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center;">${currentDate}</p>
+                <p style="text-align: center; vertical-align: middle;">${currentDate}</p>
             </td>
             <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center;">${inputs.customer}</p>
+                <p style="text-align: center; vertical-align: middle;">${inputs.customer}</p>
             </td>
             <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center;">${inputs.appVersion}</p>
+                <p style="text-align: center; vertical-align: middle;">${inputs.appVersion}</p>
             </td>
             <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center;"><a href="${inputs.androidLink}">Download</a></p>
+                <p style="text-align: center; vertical-align: middle;"><a href="${inputs.androidLink}">Download</a></p>
             </td>
             <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center;"><a href="${inputs.iosLink}">Download</a><br /> DAra</p>
+                <p style="text-align: center; vertical-align: middle;"><a href="${inputs.iosLink}">Download</a><br /> DAra</p>
             </td>
         </tr>
     """
