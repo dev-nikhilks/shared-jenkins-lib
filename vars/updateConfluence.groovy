@@ -27,7 +27,7 @@ def call(Map<String, String> inputs){
     // }
     // def tbody = table.select("tbody").first()
     // tbody.append(newRow)
-    doc.outputSettings().syntax(Syntax.xml).escapeMode(Entities.EscapeMode.xhtml)
+    doc.outputSettings().syntax(org.jsoup.nodes.Document.OutputSettings.Syntax.xml).escapeMode(org.jsoup.nodes.Entities.EscapeMode.xhtml)
     println "Output is ${doc.body().html()}"
     updateConfluencePageContent(config, doc.body().html())
 }
