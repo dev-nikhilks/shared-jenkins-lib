@@ -41,12 +41,12 @@ def getConfluencePageContent(pageId) {
     process.waitFor()
     // println "This is it ${process.text}"
     if (process.exitValue() != 0) {
-        println "Confluence page($pageId) not fetched, error in response"
+        println "Confluence page($pageId) not fetched, error in response: error ${process.text}"
         return null
     }
     def response = new JsonSlurper().parseText(process.text)
     if(response.results.isEmpty()){
-        println "Confluence page($pageId) not fetched "
+        println "Confluence page($pageId) not fetched : error ${process.text}"
         return null
     }
     return response;
@@ -58,12 +58,12 @@ def updateConfluencePageContent(Map<String, String> inputs, newContent) {
     def process = cmd.execute()
     process.waitFor()
     if (process.exitValue() != 0) {
-        println "ConfluencePageContent Error"
+        println "Confluence page($pageId) update not competed: error ${process.text}"
         return null
     }
     def response = new JsonSlurper().parseText(process.text)
-    if(response.results.isEmpty()){
-        println "Confluence page($pageId) update not competed"
+    if(response.results == null){
+        println "Confluence page($pageId) update not competed: error ${process.text}"
         return null
     }
     println "Confluence page($pageId) updated successfully"
