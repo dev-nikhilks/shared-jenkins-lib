@@ -86,7 +86,7 @@ def buildNewTableRow(Map<String, String> inputs) {
                 <p style="text-align: center; vertical-align: middle;"><a href="${inputs.androidLink}">Download</a></p>
             </td>
             <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center; vertical-align: middle;"><a href="${inputs.iosLink}">Download</a><br /> DAra</p>
+                <p style="text-align: center; vertical-align: middle;"><a href="${inputs.iosLink}">Download</a></p>
             </td>
         </tr>
     """
