@@ -1,5 +1,6 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
+import groovy.json.JsonBuilder
 
 def call(Map<String, String> inputs){
     def pageContent = getConfluencePageContent(inputs.pageId);
