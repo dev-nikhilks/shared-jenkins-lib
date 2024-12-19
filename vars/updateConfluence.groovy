@@ -63,7 +63,7 @@ def updateConfluencePageContent(Map<String, String> inputs, newContent) {
     }
     def response = new JsonSlurper().parseText(process.text)
     if(response.results == null){
-        println "Confluence page(${inputs.pageId}) update not competed: error ${process.text}"
+        println "Confluence page(${inputs.pageId}) update not competed: error ${response}"
         return null
     }
     println "Confluence page(${inputs.pageId}) updated successfully"
