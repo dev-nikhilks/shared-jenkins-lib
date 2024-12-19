@@ -58,15 +58,15 @@ def updateConfluencePageContent(Map<String, String> inputs, newContent) {
     def process = cmd.execute()
     process.waitFor()
     if (process.exitValue() != 0) {
-        println "Confluence page($pageId) update not competed: error ${process.text}"
+        println "Confluence page(${inputs.pageId}) update not competed: error ${process.text}"
         return null
     }
     def response = new JsonSlurper().parseText(process.text)
     if(response.results == null){
-        println "Confluence page($pageId) update not competed: error ${process.text}"
+        println "Confluence page(${inputs.pageId}) update not competed: error ${process.text}"
         return null
     }
-    println "Confluence page($pageId) updated successfully"
+    println "Confluence page(${inputs.pageId}) updated successfully"
 }
 
 def buildNewTableRow(Map<String, String> inputs) {
