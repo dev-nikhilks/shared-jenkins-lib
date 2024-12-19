@@ -44,7 +44,7 @@ def getConfluencePageContent(pageId) {
         return null
     }
     def response = new JsonSlurper().parseText(process.text)
-    if(response.results.length() == 0){
+    if(response.results.isEmpty()){
         return null;
     }
     return response;
