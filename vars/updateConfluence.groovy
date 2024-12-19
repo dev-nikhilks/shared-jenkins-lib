@@ -38,9 +38,13 @@ def getConfluencePageContent(pageId) {
     process.waitFor()
     // println "This is it ${process.text}"
     if (process.exitValue() != 0) {
-        throw new RuntimeException("Failed to get Confluence page: ${process.err.text}")
+        return null
     }
-    return new JsonSlurper().parseText(process.text)
+    def response = new JsonSlurper().parseText(process.text)
+    if(response.results.length == 0){
+        return null;
+    }
+    return response;
 }
 
 def updateConfluencePageContent(Map<String, String> inputs, newContent) {
