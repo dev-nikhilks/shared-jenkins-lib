@@ -4,6 +4,9 @@ import groovy.json.JsonBuilder
 
 def call(Map<String, String> inputs){
     def pageContent = getConfluencePageContent(inputs.pageId);
+    if(pageContent == null){
+        return null
+    }
     def currentPageVersion = pageContent.results[0].version.number
     def content = pageContent.results[0].body.storage.value
     def title = pageContent.results[0].title
