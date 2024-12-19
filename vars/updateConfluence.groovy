@@ -20,7 +20,7 @@ def call(Map<String, String> inputs){
 
     def newRow = buildNewTableRow(config)
     def doc = org.jsoup.Jsoup.parse(content)
-    def table = doc.select("table[ac:local-id=${inputs.app-id}]").first()
+    def table = doc.select("table[ac:local-id=${inputs.appId}]").first()
     if (!table) {
         println "Table not found"
         return null
