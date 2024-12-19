@@ -34,7 +34,7 @@ def getConfluencePageContent(pageId) {
     def cmd = ["curl", "-s", "-u", "${CONF_USERNAME}:${CONF_PASSWORD}", "${env.CONFLUENCE_BASE_URL}/pages?id=${pageId}&body-format=storage"]
     def process = cmd.execute()
     process.waitFor()
-    println "This is it ${process.text}"
+    // println "This is it ${process.text}"
     if (process.exitValue() != 0) {
         throw new RuntimeException("Failed to get Confluence page: ${process.err.text}")
     }
