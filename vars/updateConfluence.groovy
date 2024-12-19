@@ -27,7 +27,7 @@ def call(Map<String, String> inputs){
     }
     def tbody = table.select("tbody").first()
     tbody.append(newRow)
-    updateConfluencePageContent(config, doc.html())
+    updateConfluencePageContent(config, doc.text())
 }
 
 def getConfluencePageContent(pageId) {
