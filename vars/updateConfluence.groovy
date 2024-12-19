@@ -27,7 +27,7 @@ def call(Map<String, String> inputs){
     // }
     // def tbody = table.select("tbody").first()
     // tbody.append(newRow)
-    doc.outputSettings().syntax(org.jsoup.nodes.Entities.EscapeMode.xhtml)
+    doc.outputSettings().syntax(Syntax.xml).escapeMode(Entities.EscapeMode.xhtml)
     updateConfluencePageContent(config, doc.body().html())
 }
 
