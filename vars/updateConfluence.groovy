@@ -11,6 +11,8 @@ def call(Map<String, String> inputs){
     def content = pageContent.results[0].body.storage.value
     def title = pageContent.results[0].title
 
+    def currentDate = new Date().format("dd/MM/yyyy")
+
     def config = [
         'customer': inputs.customer,
         'appVersion': inputs.appVersion,
@@ -18,7 +20,8 @@ def call(Map<String, String> inputs){
         'androidLink': inputs.androidLink,
         'iosLink': inputs.iosLink,
         'title': title,
-        'pageId': inputs.pageId
+        'pageId': inputs.pageId,
+        'currentDate': currentDate
     ]
 
     def newRow = buildNewTableRow(config)
@@ -38,8 +41,7 @@ def call(Map<String, String> inputs){
 def getConfluencePageContent(pageId) {
     def cmd = ["curl", "-s", "-u", "${CONF_USERNAME}:${CONF_PASSWORD}", "${env.CONFLUENCE_BASE_URL}/pages?id=${pageId}&body-format=storage"]
     def process = cmd.execute()
-    process.waitFor()
-    // println "This is it ${process.text}"
+    process.waitFor() 
     if (process.exitValue() != 0) {
         println "Confluence page($pageId) not fetched, error in response: error ${process.text}"
         return null
@@ -71,23 +73,26 @@ def updateConfluencePageContent(Map<String, String> inputs, newContent) {
 
 def buildNewTableRow(Map<String, String> inputs) {
     def currentDate = new Date().format("dd/MM/yyyy")
-    return """
-        <tr>
-            <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center; vertical-align: middle;">${currentDate}</p>
-            </td>
-            <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center; vertical-align: middle;">${inputs.customer}</p>
-            </td>
-            <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center; vertical-align: middle;">${inputs.appVersion}</p>
-            </td>
-            <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center; vertical-align: middle;"><a href="${inputs.androidLink}">Download</a></p>
-            </td>
-            <td style="text-align: center; vertical-align: middle;">
-                <p style="text-align: center; vertical-align: middle;"><a href="${inputs.iosLink}">Download</a></p>
-            </td>
-        </tr>
-    """
+    def rawBody = libraryResource 'com/nks/api/confuence/tableRow.html'
+    return renderTemplate(rawBody,binding)
+
+    // return """
+    //     <tr>
+    //         <td style="text-align: center; vertical-align: middle;">
+    //             <p style="text-align: center; vertical-align: middle;">${currentDate}</p>
+    //         </td>
+    //         <td style="text-align: center; vertical-align: middle;">
+    //             <p style="text-align: center; vertical-align: middle;">${inputs.customer}</p>
+    //         </td>
+    //         <td style="text-align: center; vertical-align: middle;">
+    //             <p style="text-align: center; vertical-align: middle;">${inputs.appVersion}</p>
+    //         </td>
+    //         <td style="text-align: center; vertical-align: middle;">
+    //             <p style="text-align: center; vertical-align: middle;"><a href="${inputs.androidLink}">Download</a></p>
+    //         </td>
+    //         <td style="text-align: center; vertical-align: middle;">
+    //             <p style="text-align: center; vertical-align: middle;"><a href="${inputs.iosLink}">Download</a></p>
+    //         </td>
+    //     </tr>
+    // """
 }
