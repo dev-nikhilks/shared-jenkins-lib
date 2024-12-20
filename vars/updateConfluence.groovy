@@ -74,7 +74,7 @@ def updateConfluencePageContent(Map<String, String> inputs, newContent) {
 def buildNewTableRow(Map<String, String> inputs) {
     def currentDate = new Date().format("dd/MM/yyyy")
     def rawBody = libraryResource 'com/nks/api/confuence/tableRow.html'
-    return renderTemplate(rawBody,binding)
+    return renderTemplate(rawBody,inputs)
 
     // return """
     //     <tr>
